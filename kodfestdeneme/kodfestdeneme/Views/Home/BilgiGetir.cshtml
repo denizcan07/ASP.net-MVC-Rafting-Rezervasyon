@@ -1,0 +1,50 @@
+﻿@model kodfestdeneme.Models.Veritabanı.Müsterikayıt
+@{
+    ViewBag.Title = "BilgiGetir";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <div class="container">
+
+        <!-- Page Heading/Breadcrumbs -->
+        <h1 class="mt-4 mb-3">
+            Güncelleme Sayfası
+
+        </h1>
+
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/Home/Services">Rezervasyon Durumu</a>
+            </li>
+            <li class="breadcrumb-item active">Güncelleme</li>
+        </ol>
+        @using (Html.BeginForm("Güncelle", "Home", FormMethod.Post))
+        {
+
+
+            <div class="form-group">
+
+
+                <label>Mno</label>
+                @Html.TextBoxFor(m => m.Mno, new { @class = "form-control" })
+                <label>Tc</label>
+                @Html.TextBoxFor(m => m.Tc, new { @class = "form-control" })
+                <label>Ad</label>
+                @Html.TextBoxFor(m => m.Ad, new { @class = "form-control" })
+                <label>Soyad</label>
+                @Html.TextBoxFor(m => m.Soyad, new { @class = "form-control" })
+                <label>Telefon</label>
+                @Html.TextBoxFor(m => m.Telefon, new { @class = "form-control" })
+                <label>E-mail</label>
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                <label>Rezervasyon Tarihi</label>
+                @Html.TextBoxFor(m => m.Reztarih, new { @class = "form-control",type="date" })
+                <label>Kişi Sayısı</label>
+                @Html.TextBoxFor(m => m.Kisisayı, new { @class = "form-control" })
+
+
+            </div>
+            <div>
+                <button class="btn btn-warning"> Güncelle</button>
+            </div>
+        }<br/>
+    </div>

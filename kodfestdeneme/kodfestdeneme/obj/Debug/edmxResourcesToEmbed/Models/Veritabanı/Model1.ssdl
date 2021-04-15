@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="vtModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Görevli">
+    <Key>
+      <PropertyRef Name="Gno" />
+    </Key>
+    <Property Name="Gno" Type="nchar" MaxLength="3" Nullable="false" />
+    <Property Name="Gad" Type="nvarchar" MaxLength="50" />
+    <Property Name="Gsoyad" Type="nvarchar" MaxLength="50" />
+    <Property Name="Gcinsiyet" Type="char" MaxLength="20" />
+    <Property Name="Gtelefon" Type="nchar" MaxLength="11" />
+    <Property Name="Gemail" Type="nvarchar" MaxLength="50" />
+    <Property Name="Gmaaş" Type="nchar" MaxLength="4" />
+  </EntityType>
+  <EntityType Name="Gruplar">
+    <Key>
+      <PropertyRef Name="Grupno" />
+    </Key>
+    <Property Name="Grupno" Type="nchar" MaxLength="3" Nullable="false" />
+    <Property Name="Raftingtür" Type="nvarchar" MaxLength="50" />
+    <Property Name="Gno" Type="nchar" MaxLength="3" />
+  </EntityType>
+  <EntityType Name="Lokanta">
+    <Key>
+      <PropertyRef Name="Yemekno" />
+    </Key>
+    <Property Name="Yemekno" Type="nchar" MaxLength="3" Nullable="false" />
+    <Property Name="Yemektürü" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="Ücret" Type="nchar" MaxLength="4" />
+  </EntityType>
+  <EntityType Name="Müsterikayıt">
+    <Key>
+      <PropertyRef Name="Mno" />
+    </Key>
+    <Property Name="Mno" Type="int" Nullable="false" />
+    <Property Name="Tc" Type="nchar" MaxLength="11" />
+    <Property Name="Ad" Type="nvarchar" MaxLength="50" />
+    <Property Name="Soyad" Type="nvarchar" MaxLength="50" />
+    <Property Name="Telefon" Type="nchar" MaxLength="11" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="Reztarih" Type="datetime" />
+    <Property Name="Kisisayı" Type="nchar" MaxLength="3" />
+  </EntityType>
+  <EntityType Name="Rezbilgi">
+    <Key>
+      <PropertyRef Name="Rezno" />
+    </Key>
+    <Property Name="Rezno" Type="nchar" MaxLength="5" Nullable="false" />
+    <Property Name="Mno" Type="int" Nullable="false" />
+    <Property Name="Yemekno" Type="nchar" MaxLength="3" Nullable="false" />
+    <Property Name="Grupno" Type="nchar" MaxLength="3" Nullable="false" />
+    <Property Name="Raftingücret" Type="nchar" MaxLength="4" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK__Gruplar__Gno__52593CB8">
+    <End Role="Görevli" Type="Self.Görevli" Multiplicity="0..1" />
+    <End Role="Gruplar" Type="Self.Gruplar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Görevli">
+        <PropertyRef Name="Gno" />
+      </Principal>
+      <Dependent Role="Gruplar">
+        <PropertyRef Name="Gno" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Rezbilgi__Grupno__71D1E811">
+    <End Role="Gruplar" Type="Self.Gruplar" Multiplicity="1" />
+    <End Role="Rezbilgi" Type="Self.Rezbilgi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gruplar">
+        <PropertyRef Name="Grupno" />
+      </Principal>
+      <Dependent Role="Rezbilgi">
+        <PropertyRef Name="Grupno" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Rezbilgi__Mno__6FE99F9F">
+    <End Role="Müsterikayıt" Type="Self.Müsterikayıt" Multiplicity="1" />
+    <End Role="Rezbilgi" Type="Self.Rezbilgi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Müsterikayıt">
+        <PropertyRef Name="Mno" />
+      </Principal>
+      <Dependent Role="Rezbilgi">
+        <PropertyRef Name="Mno" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Rezbilgi__Yemekn__70DDC3D8">
+    <End Role="Lokanta" Type="Self.Lokanta" Multiplicity="1" />
+    <End Role="Rezbilgi" Type="Self.Rezbilgi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lokanta">
+        <PropertyRef Name="Yemekno" />
+      </Principal>
+      <Dependent Role="Rezbilgi">
+        <PropertyRef Name="Yemekno" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="ekle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Mno" Type="nchar" Mode="In" />
+    <Parameter Name="Tc" Type="nchar" Mode="In" />
+    <Parameter Name="Ad" Type="nvarchar" Mode="In" />
+    <Parameter Name="Soyad" Type="nvarchar" Mode="In" />
+    <Parameter Name="Telefon" Type="nchar" Mode="In" />
+    <Parameter Name="Email" Type="nvarchar" Mode="In" />
+    <Parameter Name="Reztarih" Type="datetime" Mode="In" />
+    <Parameter Name="Kisisayı" Type="nchar" Mode="In" />
+  </Function>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="göster" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="güncelleme" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Mno" Type="nchar" Mode="In" />
+    <Parameter Name="Tc" Type="nchar" Mode="In" />
+    <Parameter Name="Ad" Type="nvarchar" Mode="In" />
+    <Parameter Name="Soyad" Type="nvarchar" Mode="In" />
+    <Parameter Name="Telefon" Type="nchar" Mode="In" />
+    <Parameter Name="Email" Type="nvarchar" Mode="In" />
+    <Parameter Name="Reztarih" Type="datetime" Mode="In" />
+    <Parameter Name="Kisisayı" Type="nchar" Mode="In" />
+  </Function>
+  <Function Name="silme" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Mno" Type="nchar" Mode="In" />
+  </Function>
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="vtModelStoreContainer">
+    <EntitySet Name="Görevli" EntityType="Self.Görevli" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Gruplar" EntityType="Self.Gruplar" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Lokanta" EntityType="Self.Lokanta" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Müsterikayıt" EntityType="Self.Müsterikayıt" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rezbilgi" EntityType="Self.Rezbilgi" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Gruplar__Gno__52593CB8" Association="Self.FK__Gruplar__Gno__52593CB8">
+      <End Role="Görevli" EntitySet="Görevli" />
+      <End Role="Gruplar" EntitySet="Gruplar" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Rezbilgi__Grupno__71D1E811" Association="Self.FK__Rezbilgi__Grupno__71D1E811">
+      <End Role="Gruplar" EntitySet="Gruplar" />
+      <End Role="Rezbilgi" EntitySet="Rezbilgi" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Rezbilgi__Mno__6FE99F9F" Association="Self.FK__Rezbilgi__Mno__6FE99F9F">
+      <End Role="Müsterikayıt" EntitySet="Müsterikayıt" />
+      <End Role="Rezbilgi" EntitySet="Rezbilgi" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Rezbilgi__Yemekn__70DDC3D8" Association="Self.FK__Rezbilgi__Yemekn__70DDC3D8">
+      <End Role="Lokanta" EntitySet="Lokanta" />
+      <End Role="Rezbilgi" EntitySet="Rezbilgi" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

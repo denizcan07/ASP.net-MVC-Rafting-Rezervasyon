@@ -1,0 +1,62 @@
+﻿@using kodfestdeneme.Models.Veritabanı
+@model List<Müsterikayıt>
+@{
+    ViewBag.Title = "Services";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="container">
+
+        <!-- Page Heading/Breadcrumbs -->
+        <h1 class="mt-4 mb-3">
+            Rezervasyon Durumu
+
+        </h1>
+
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/Home">Home</a>
+            </li>
+            <li class="breadcrumb-item active">Rezervasyon Durumu</li>
+        </ol>
+
+
+
+
+        <table class="table">
+
+            <tr>
+                <th>Mno</th>
+                <th>T.C.</th>
+                <th>Ad</th>
+                <th>Soyad</th>
+                <th>Telefon</th>
+                <th>E-mail</th>
+                <th>Rezervasyon Tarihi</th>
+                <th>Kişi Sayısı</th>
+                <th>Güncelle</th>
+                <th>Sil</th>
+            </tr>
+
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <th>@Model[i].Mno</th>
+                    <td>@Model[i].Tc</td>
+                    <td>@Model[i].Ad</td>
+                    <td>@Model[i].Soyad</td>
+                    <td>@Model[i].Telefon</td>
+                    <td>@Model[i].Email</td>
+                    <td>@Model[i].Reztarih</td>
+                    <td>@Model[i].Kisisayı</td>
+                    <td><a href="/Home/BilgiGetir/@Model[i].Mno" class="btn btn-success">Güncelle</a></td>
+                    <td><a href="/Home/SIL/@Model[i].Mno" class="btn btn-danger">Sil</a></td>
+                </tr>
+            }
+
+
+        </table>
+        <a href="/Home/Ekle" class="btn btn-primary">Rezervasyon Ekle</a>
+
+    </div>
+
